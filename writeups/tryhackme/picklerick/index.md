@@ -13,7 +13,7 @@ The first thing to do is to inspect the source code of the website. Looking at w
 
 > R1ckRul3s
 
-![Source Code](../../static/writeupimgs/picklerickimgs/SourceCode.png)
+![Source Code](static/writeupimgs/picklerickimgs/SourceCode.pngSourceCode.png)
 
 Looking at the website, there is not a whole lot going on as there is not any other content or links to interact with the website with. This is where we use a tool such as Gobuster to attempt to discover new directories as well as any files that may be hiding. Remember, it is important to attempt to enumerate both.
 
