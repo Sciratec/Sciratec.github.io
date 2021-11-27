@@ -14,7 +14,7 @@ Well it happeend, someone clicked on the "enabled macros" in a malicious documen
 # Disclaimer: 
 Only one rule: There will be no direct contact with any domain or IP
 
-The first question drops a little hint for us to start, which asks for the date and time the first `HTTP` connection made. Opening up the PCAP file we can see that there is 70,873 packets to go through. I don't know about you, but I am going through that mess manually. Rather, we can use wireshark's filter feature to drill down into what we need to find. In this instance we filter the `HTTP` traffic out from the blob of packets to find the answer in the Layer 2 (Data-Link) "Frame" section. 
+The first question drops a little hint for us to start, which asks for the date and time the first `HTTP` connection made. Opening up the PCAP file we can see that there is 70,873 packets to go through. I don't know about you, but I am not going through that mess manually. Rather, we can use wireshark's filter feature to drill down into what we need to find. In this instance we filter the `HTTP` traffic out from the blob of packets to find the answer in the Layer 2 (Data-Link) "Frame" section. 
 
 ![http stream](../../../static/writeupimgs/carnage/http-filter-traffic.png)
 
