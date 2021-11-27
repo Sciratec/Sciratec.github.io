@@ -26,7 +26,7 @@ Not only was a malicious file being downloaded onto the victim's computer, but w
 
 Now that we know what and where the malware was being downloading from lets dive further into this packet of data to find what is contained in the zipped up file. Using Wireshark's `Follow HTTP Stream` feature, we can follow the packet and the data contained to find our next answer. 
 
-Note, the answer was at the type of the data stream, but I took the scenic route and discovered the file contained in the zip file at the bottom.
+Note, the answer was at the top of the data stream, but I took the scenic route and discovered the file contained in the zip file at the bottom.
 
 ![HTTP Follow](../../../static/writeupimgs/carnage/http-stream.png)
 ![HTTP Stream](../../../static/writeupimgs/carnage/malfile.png)
