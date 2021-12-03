@@ -10,6 +10,10 @@
   width: 100%;
 }
 
+.badge{
+  text-align: center;
+}
+
 .header, .nav-link{
   position: relative;
   color: RGB(214, 255, 250);
